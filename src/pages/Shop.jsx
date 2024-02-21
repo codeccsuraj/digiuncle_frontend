@@ -24,9 +24,9 @@ const Shop = () => {
                 <div className="row">
                     <div className="col-lg-3 border-top">
                        <div className='col-lg'>
+                        <h4 className='h4 mb-2'>Brands</h4>
                         <div className='border-top border-bottom border-secondary my-3 max-h-[50vh] overflow-scroll overflow-x-hidden no-scrollbar'>
                             <form action="">
-                                <h4 className='h4 mb-2'>Brands</h4>
                                 <p className='hr'></p>
                                 {products.map((i) => (
                                     <div className="form-group mb-3 flex gap-2 px-2">
@@ -55,6 +55,15 @@ const Shop = () => {
                             </div>                        
                         </div>
                        </div>
+                       <div className="col-lg py-6">
+                         <h4 className='h4 font-bold mb-3'>By Ratings</h4>
+                         <div className='row gap-2'>
+                            <button className='col-lg-5 btn bg-success-subtle text-success fw-bold'>4.5 above</button>
+                            <button className='col-lg-5 btn bg-success-subtle text-success fw-bold'>4.0 above</button>
+                            <button className='col-lg-5 btn bg-warning-subtle text-warning fw-bold'>3.5 above</button>
+                            <button className='col-lg-5 btn bg-warning-subtle text-warning fw-bold'>2.0 above</button>
+                         </div>
+                       </div>
                     </div>
                     <div className="col-lg">
                         <div className="col-lg flex justify-end py-3">
@@ -77,11 +86,11 @@ const Shop = () => {
                                             <div className='row'>
                                                 <div className='col-lg-12 col-4 flex justify-center'>
                                                     <Link to={`product/${product.category}/${product.id}`}>
-                                                        <img src={product.image_1} alt="" className='img-fluid' />
+                                                        <img src={product.image_1} alt="" className='img-fluid size-44' />
                                                     </Link>
                                                 </div>
                                                 <div className="col-lg-12 col flex flex-col gap-1">
-                                                    <Link to={`http://localhost:3000/product/${product.category}/${product.id}`} className='fs-6 fw-bold'>{product.title.slice(0, 15)}...</Link>
+                                                <Link to={`/product/${product.category}/${product.id}`} className='fs-6 fw-bold'>{product.title.slice(0, 15)}...</Link>
                                                     <p>{product.description.slice(0,50)}..</p>
                                                     <ReactStars
                                                         count={product.rating} 
