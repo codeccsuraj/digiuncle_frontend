@@ -5,68 +5,55 @@ import { useCart } from 'react-use-cart'
 import ReactStars from "react-rating-stars-component";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { FaListUl } from "react-icons/fa";
+import { FaListUl, FaFilter } from "react-icons/fa";
 import { IoGridOutline } from "react-icons/io5";
+import { Pagination } from '../components';
+import UseLocalStorage from '../components/pagination/UseLocalStorage';
 
 
 
 const Shop = () => {
+    const [currentPage, setCurrentPage] = UseLocalStorage({key : 'currentPage', initialValue : 1})
+    const productPerPage = 12;
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    }
     const {addItem} = useCart();
+
+     // Calculate the index of the first and last products to be displayed
+     const indexOfLastProduct = currentPage * productPerPage;
+     const indexOfFirstProduct = indexOfLastProduct - productPerPage;
+
+     // Get the current products to be displayed based on pagination
+    const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+    // Calculate total number of pages
+    const totalPages = Math.ceil(products.length / productPerPage);
+
+    // Calculate range of products being shown
+    const showingFrom = indexOfFirstProduct + 1;
+    // const showingTo = Math.min(indexOfLastProduct, products.length);
   return (
     <>
-        <div className="container-fluid bg-teal-400">
+        <div className="container-fluid bg-teal-400 py-2">
             <div className="container-sm">
-                <h1 className='text-2xl font-bold py-3'>Shop</h1>
+                <h1 className='text-2xl font-bold'>Shop</h1>
+                <nav aria-label="breadcrumb">
+                    <ol className="breadcrumb">
+                        <li className="breadcrumb-item font-semibold"><Link to="/">Home</Link></li>
+                        <li className="breadcrumb-item active" aria-current="page">Shop</li>
+                    </ol>
+                </nav>
             </div>
         </div>
         <div className="container-fluid">
             <div className="container-sm">
                 <div className="row">
-                    <div className="col-lg-3 border-top">
-                       <div className='col-lg'>
-                        <h4 className='h4 mb-2'>Brands</h4>
-                        <div className='border-top border-bottom border-secondary my-3 max-h-[50vh] overflow-scroll overflow-x-hidden no-scrollbar'>
-                            <form action="">
-                                <p className='hr'></p>
-                                {products.map((i) => (
-                                    <div className="form-group mb-3 flex gap-2 px-2">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                                        <label class="form-check-label h6" for="flexCheckDefault">
-                                            {i.brand}
-                                        </label>
-                                    </div>
-                                ))}
-                            </form>
-                        </div>
-                       </div>
-                       <div className="col-lg">
-                        <div className='py-2'>
-                            <h3 className='h4 font-bold'>Price Range</h3>
-                            <input type="range" className='w-100' />
-                        </div>
-                        <div className='flex items-center gap-2 justify-between'>
-                            <div>
-                                <label htmlFor="max" className='text-center w-100'>Max</label>
-                                <input type="text" className='form-control w-100' />
-                            </div>
-                            <div>
-                                <label htmlFor="max" className='text-center w-100'>Min</label>
-                                <input type="text" className='form-control w-100' />
-                            </div>                        
-                        </div>
-                       </div>
-                       <div className="col-lg py-6">
-                         <h4 className='h4 font-bold mb-3'>By Ratings</h4>
-                         <div className='row gap-2'>
-                            <button className='col-lg-5 btn bg-success-subtle text-success fw-bold'>4.5 above</button>
-                            <button className='col-lg-5 btn bg-success-subtle text-success fw-bold'>4.0 above</button>
-                            <button className='col-lg-5 btn bg-warning-subtle text-warning fw-bold'>3.5 above</button>
-                            <button className='col-lg-5 btn bg-warning-subtle text-warning fw-bold'>2.0 above</button>
-                         </div>
-                       </div>
-                    </div>
                     <div className="col-lg">
-                        <div className="col-lg flex justify-end py-3">
+                        <div className="col-lg flex justify-between py-3">
+                            <div className="col-lg-3">
+                                <button className='btn btn-outline-dark flex items-center gap-3'><FaFilter /> filter</button>
+                            </div>
                             <div className="co-lg-3 flex items-center gap-3">
                                 <select name="" id="" className='form-select'>
                                     <option value="latest" selected>Latest</option>
@@ -80,9 +67,18 @@ const Shop = () => {
                                 </div>
                             </div>
                         </div>
+                        <div className='row py-3'>
+                            <div className="col-lg-12">
+                                <h2 className='fs-3 fw-bold'>All Products</h2>
+                            </div>
+                            <div className='col-lg-12 flex gap-2 items-end'>
+                                <h4 className='fs-5'>Showing Results</h4>
+                                <span className='font-semibold text-[13px] text-secondary'>({showingFrom} - {totalPages} (product of {products.length} products))</span>
+                            </div>
+                        </div>
                         <div className="row py-4">
-                            {products.map((product) => (
-                                    <div key={product.id} className='col-lg-4 col-sm-12 mb-3'>
+                            {currentProducts.map((product) => (
+                                    <div key={product.id} className='col-lg-3 col-sm-12 mb-3'>
                                             <div className='row'>
                                                 <div className='col-lg-12 col-4 flex justify-center'>
                                                     <Link to={`product/${product.category}/${product.id}`}>
@@ -122,6 +118,13 @@ const Shop = () => {
                                         </div>
                                 ))}
                         </div>
+                        <Pagination
+                            productsPerPage={productPerPage}
+                            totalProducts={products.length}
+                            currentPage={currentPage}
+                            handlePageChange={handlePageChange}
+                            key="pagination"
+                        />
                     </div>
                 </div>
             </div>

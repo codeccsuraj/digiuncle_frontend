@@ -3,3 +3,9 @@
   height: 1px;
   background-color: rgb(204, 197, 197);
 }
+.bg-gradient-pink{
+  background-image: linear-gradient(to right, rgb(248, 87, 166), rgb(255, 88, 88));;
+}
+.activeLink{
+  background-color: cornflowerblue;
+}

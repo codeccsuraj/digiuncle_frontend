@@ -16,7 +16,7 @@ const Navbar = () => {
       <nav className="flex items-center justify-end py-1 bg-slate-200">
         <ul className="mx-10 flex items-center gap-8">
           <li>
-            <Link to="/login" className="font-semibold text-[14px] flex items-center gap-1"><FaRegUserCircle />My account</Link>
+            <Link to="/myaccount" className="font-semibold text-[14px] flex items-center gap-1"><FaRegUserCircle />My account</Link>
           </li>
           <li>
             <Link className="font-semibold text-[14px] flex items-center gap-1"><GiHandTruck />Orders</Link>
@@ -29,7 +29,7 @@ const Navbar = () => {
           </li>
         </ul>
       </nav>
-      <nav className="navbar navbar-expand-lg bg-light sticky-top">
+      <nav className="navbar navbar-expand-lg bg-white sticky-top">
         <div className="container-fluid">
           <Link to="/" className="fs-4 font-semibold">DIGIUNCLE</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
